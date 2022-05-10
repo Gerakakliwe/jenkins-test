@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage("Get info") {
             steps {
-		def response = httpRequest 'http://localhost:8080/jenkins/api/json?pretty=true'
+		def response = httpRequest 'https://resttesttest.com/'
 		println("Status: "+response.status)
 		println("Content: "+response.content)
             }
