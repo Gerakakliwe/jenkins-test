@@ -2,14 +2,12 @@ pipeline {
     agent any
     
     stages {
-        stage("Get info") {
-            steps {
-		def response = httpRequest 'https://resttesttest.com/'
-		println("Status: "+response.status)
-		println("Content: "+response.content)
-            }
+        stage("Send notification") {
+	    def response = httpRequest 'http://localhost:8080/jenkins/api/json?pretty=true'
+	    println("Status: "+response.status)
+	    println("Content: "+response.content)
         }
-        stage ("Parsing") {
+        stage ("Test One") {
             steps {
                 echo "Yeehoo"
             }
