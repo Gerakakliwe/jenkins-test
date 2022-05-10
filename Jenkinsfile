@@ -1,16 +1,17 @@
 pipeline {
     agent any
-    
-    stages {
-        stage("Send notification") {
-	    def response = httpRequest 'http://localhost:8080/jenkins/api/json?pretty=true'
-	    println("Status: "+response.status)
-	    println("Content: "+response.content)
+    environment {
+        def response = httpRequest "https://www.google.com/"
         }
-        stage ("Test One") {
-            steps {
-                echo "Yeehoo"
+        stages {
+            stage('get'){
+                steps {
+                    script {
+                        echo "${response}"
+			echo response.status
+                        echo response.content
+                    }
+                }
             }
         }
     }
-}
