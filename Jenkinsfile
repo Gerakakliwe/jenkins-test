@@ -1,17 +1,3 @@
-pipeline {
-    agent any
-    environment {
-        def response = httpRequest "https://www.google.com/"
-        }
-        stages {
-            stage('get'){
-                steps {
-                    script {
-                        echo "${response}"
-			echo response.status
-                        echo response.content
-                    }
-                }
-            }
-        }
-    }
+def response = httpRequest "http://httpbin.org/response-headers?param1=${param1}"
+println('Status: '+response.status)
+println('Response: '+response.content)
