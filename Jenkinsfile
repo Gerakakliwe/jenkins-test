@@ -2,12 +2,14 @@ pipeline {
     agent any
     
     stages {
-        stage("Send notification") {
+        stage("Get info") {
             steps {
-                echo "Wohoo"
+		def response = httpRequest 'http://localhost:8080/jenkins/api/json?pretty=true'
+		println("Status: "+response.status)
+		println("Content: "+response.content)
             }
         }
-        stage ("Test One") {
+        stage ("Parsing") {
             steps {
                 echo "Yeehoo"
             }
