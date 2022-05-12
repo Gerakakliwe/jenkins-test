@@ -21,32 +21,7 @@ node {
     } catch(e) {
         error = e
         throw e
-    } finally {
-        if (error == null)
-            notifySlack(currentBuild.currentResult)
-        else
-            notifySlack('FAILED')
     }
-}
-
-def notifySlack(String buildStatus, String channel = "U02M8A65HDK") {
-    // Replace encoded slashes.
-    def decodedJobName = env.JOB_NAME.replaceAll("%2F", "/")
-
-    def color
-    if (buildStatus == 'SUCCESS') {
-        color = 'good'
-    } else if (buildStatus == 'UNSTABLE') {
-        color = '#FFFE89'
-    } else {
-        color = 'danger'
-    }
-
-    def msg = """`${decodedJobName}`: Build <${env.BUILD_URL}|#${env.BUILD_NUMBER}> ${buildStatus}
-Build cause: ${currentBuild.getBuildCauses()[0].shortDescription}
-"""
-
-    slackSend(color: color, channel: channel, message: msg)
 }
 
 @NonCPS
