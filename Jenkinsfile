@@ -16,7 +16,17 @@ node {
                 //echo "Commit id: ${entry.commitId}, \n Commit author: ${entry.author} \n Commit date: ${new Date(entry.timestamp)} \n Commit message: ${entry.msg}"
             }
         }
-        groupCommits(changeLog)
+        changeLog.groupBy {
+        if (it.msg =~ /(?i)op-\d*/)
+            (it.msg =~ /(?i)op-\d+/).findAll()
+            else
+                "no ticket :("
+        }.each { entry ->
+            println(entry.key)
+            entry.value.each {
+                println('\t' + it.msg)
+            }
+        }
 }
     } catch(e) {
         error = e
@@ -40,19 +50,5 @@ def ifCommentHasTicket(def commitMessage){
         println(commitMessage + " has a jira ticket")
     } else {
         println(commitMessage + " DOESN'T HAVE")
-    }
-}
-@NonCPS
-def groupCommits(def changeLog) {
-    changeLog.groupBy {
-        if (it.msg =~ /(?i)op-\d*/)
-            (it.msg =~ /(?i)op-\d+/).findAll()
-        else
-            "no ticket :("
-    }.each { entry ->
-        println(entry.key)
-        entry.value.each {
-            println('\t' + it.msg)
-        }
     }
 }
