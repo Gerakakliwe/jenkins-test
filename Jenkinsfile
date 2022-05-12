@@ -17,9 +17,7 @@ node {
             }
         }
         groupCommits(changeLog)
-        echo "List with tickets: ${changeLogTickets}"
-        echo "List without tickets ${changeLogNoTickets}"
-
+}
     } catch(e) {
         error = e
         throw e
