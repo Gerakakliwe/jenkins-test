@@ -16,9 +16,9 @@ node {
                 //echo "Commit id: ${entry.commitId}, \n Commit author: ${entry.author} \n Commit date: ${new Date(entry.timestamp)} \n Commit message: ${entry.msg}"
             }
         }
-        changeLog.groupBy {
-        if (it.msg =~ /(?i)op-\d*/)
-            (it.msg =~ /(?i)op-\d+/).findAll()
+        changeLog.groupBy { 
+            if (it.msg =~ /op-\d*/)
+                (it.msg =~ /op-\d+/).findAll()
             else
                 "no ticket :("
         }.each { entry ->
