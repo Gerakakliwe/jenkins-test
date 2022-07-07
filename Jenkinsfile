@@ -1,30 +1,28 @@
 pipeline {
-    agent any 
+    agent { label 'linux' }
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '5'))
+    }
+    environment {
+        CI = true
+        ARTIFACTORY_ACCESS_TOKEN = credentials('artifactory-access-token')
+    }
     stages {
-        stage('Stage 1') {
+        stage('Build') {
             steps {
-                echo 'Hello world!' 
+                echo 'kavoiwo'
             }
         }
-        stage('Stage 2') {
-            steps {
-                echo 'Aboba world!' 
+        stage('Upload to artifactory') {
+            agent {
+                docker {
+                    image 'releases-docker.jfrog.io/jfrog/jfrog-cli-v2:2.2.0'
+                    reuseNode true
+                }
             }
-        }
-        stage('Stage 3') {
             steps {
-                echo 'Bye world!' 
+                sh 'jfrog rt upload --url http://localhost:8082/ui/artifactory/ --access-token ${ARTIFACTORY_ACCESS_TOKEN} target/demo-0.0.1 jenkins-test/'
             }
         }
     }
 }
-rtServer (
-    id: 'Artifactory-1',
-    url: 'http://localhost:8082/ui/artifactory',
-    // If you're using username and password:
-    username: 'admin',
-    password: 'Xthtgfirf123.',
-    // Configure the connection timeout (in seconds).
-    // The default value (if not configured) is 300 seconds:
-    timeout: 300
-)
