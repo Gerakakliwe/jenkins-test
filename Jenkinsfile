@@ -18,21 +18,17 @@ pipeline {
         }
     }
 }
-rtDownload (
-    serverId: 'Artifactory-1',
-    spec: '''{
-          "files": [
-            {
-              "pattern": "bazinga-repo/froggy-files/",
-              "target": "bazinga/"
-            }
-          ]
-    }''',
- 
-    // Optional - Associate the downloaded files with the following custom build name and build number,
-    // as build dependencies.
-    // If not set, the files will be associated with the default build name and build number (i.e the
-    // the Jenkins job name and number).
-    buildName: 'holyFrog',
-    buildNumber: '42',
+rtServer (
+    id: 'Artifactory-1',
+    url: 'http://my-artifactory-domain/artifactory',
+    // If you're using username and password:
+    username: 'user',
+    password: 'password',
+    // If you're using Credentials ID:
+    credentialsId: 'ccrreeddeennttiiaall',
+    // If Jenkins is configured to use an http proxy, you can bypass the proxy when using this Artifactory server:
+    bypassProxy: true,
+    // Configure the connection timeout (in seconds).
+    // The default value (if not configured) is 300 seconds:
+    timeout: 300
 )
