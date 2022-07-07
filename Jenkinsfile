@@ -18,13 +18,3 @@ pipeline {
         }
     }
 }
-rtServer (
-    id: 'Artifactory-1',
-    url: 'http://localhost:8082/ui/artifactory',
-    // If you're using username and password:
-    username: 'admin',
-    password: 'Xthtgfirf123.',
-    // Configure the connection timeout (in seconds).
-    // The default value (if not configured) is 300 seconds:
-    timeout: 300
-)
