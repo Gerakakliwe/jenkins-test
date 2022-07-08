@@ -21,7 +21,7 @@ pipeline {
                 }
             }
             steps {
-                sh 'jfrog rt upload --url http://localhost:8082/ui/artifactory/ --access-token ${ARTIFACTORY_ACCESS_TOKEN} target/demo-0.0.1 jenkins-test/'
+                sh 'jfrog rt upload --url http://localhost:8082/ui/artifactory/ --access-token ${ARTIFACTORY_ACCESS_TOKEN} test.txt jenkins-test/'
             }
         }
     }
